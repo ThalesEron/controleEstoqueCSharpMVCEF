@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Cadastro";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+
+<div class="jumbotron">
+    <h3>Novo Produto</h3>
+
+    <form action="/cadastro" method="post">
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
+        </div>
+        <div class="form-group">
+            <label for="quantidade">Quantidade</label>
+            <input type="number" class="form-control" id="quantidade" name="quantidade" placeholder="Quantidade">
+        </div>
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+
+</div>
+
+
+
