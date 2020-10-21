@@ -55,8 +55,6 @@ D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\bin\Debug\netcoreapp3.1
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.csprojAssemblyReference.cache
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.AssemblyInfoInputs.cache
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.AssemblyInfo.cs
-D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.csproj.CoreCompileInputs.cache
-D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.MvcApplicationPartsAssemblyInfo.cache
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.RazorAssemblyInfo.cache
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.RazorAssemblyInfo.cs
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.TagHelpers.input.cache
@@ -78,3 +76,6 @@ D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.dll
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.pdb
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.genruntimeconfig.cache
+D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\Razor\Views\Home\Listar.cshtml.g.cs
+D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.csproj.CoreCompileInputs.cache
+D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.MvcApplicationPartsAssemblyInfo.cache

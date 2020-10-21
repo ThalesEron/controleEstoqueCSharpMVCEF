@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Listar";
+    IEnumerable<Business.Produto> produtos = ViewBag.Listar;
+}
+
+
+<div class="jumbotron">
+    <h3>Listar produtos cadastrados</h3>
+
+    <ul>
+        @foreach(var p in produtos){
+            <li>@p.Nome @p.Quantidade</li>
+        }
+    </ul>
+
+</div>

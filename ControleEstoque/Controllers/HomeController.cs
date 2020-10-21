@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using ControleEstoque.Models;
 using Business;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace ControleEstoque.Controllers
 {
@@ -40,6 +41,41 @@ namespace ControleEstoque.Controllers
             return View();
         }
 
+        public IActionResult Listar()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
+
+            var context = new ControleContexto(optionsBuilder.Options);
+
+            //         var produtoExist = context.Produtos
+            //.FromSqlRaw("SELECT * FROM dbo.Produto WHERE Nome= 'Biscoito'").FirstOrDefault();
+
+
+            //         Debug.WriteLine("Testando {0}", produtoExist.Quantidade);
+
+            //context.Produtos.Find();
+
+            
+           
+
+
+           var produt = context.Produtos
+                       .FirstOrDefault(b => b.Nome == "Biscoito");
+
+            Debug.WriteLine("Testando {0}", produt.Quantidade);
+
+
+            IEnumerable<Produto> produtoQuery =
+    from prod in context.Produtos
+    select prod;
+
+
+            ViewBag.Listar = produtoQuery;
+
+            return View();
+        }
+
 
 
         [HttpPost]
@@ -49,14 +85,29 @@ namespace ControleEstoque.Controllers
             var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
 
-
                 var context = new ControleContexto(optionsBuilder.Options);
-                context.Produtos.Add(new Produto() {Nome = nome, Quantidade = quantidade });
+
+
+            var produt = context.Produtos
+                       .FirstOrDefault(b => b.Nome == nome);
+
+
+           
+           
+
+            if (produt?.Id > 0)
+            {
+
+                ViewBag.Message = "Produto já registrado.";             
+
+            } else
+            {
+                context.Produtos.Add(new Produto() { Nome = nome, Quantidade = quantidade });
                 context.SaveChanges();
-  
-            //Debug.WriteLine("Testando {0} {1}", nome, quantidade);
+                ViewBag.Message = "Produto cadastro com sucesso.";
+            }
 
-
+               
 
             return View();
         }
