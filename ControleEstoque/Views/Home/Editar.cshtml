@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Editar";
+    IEnumerable<Business.Produto> produtos = ViewBag.Listar;
+}
+<h1>@ViewData["Title"]</h1>
+
+
+
+@if (ViewBag.Message != null)
+{
+    <script>
+    alert("@ViewBag.Message");
+    </script>
+}
+
+
+
+<div class="jumbotron">
+    <h3>Selecione o produto que você deseja editar:</h3>
+
+
+    <form action="/editar" method="post">
+        <div class="form-group">
+            <label for="nomestring">Nome</label>
+            <select class="form-control" id="nome" name="nome" data-placeholder="Selecione o produto:">
+
+                @if (produtos != null)
+                {
+                    @foreach (var p in produtos)
+                    {
+                        <option value="@p.Id">@p.Nome</option>
+                    }
+                }
+
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="quantidade">Quantidade</label>
+            <input type="number" class="form-control" id="quantidade" name="quantidade" placeholder="Quantidade">
+           
+        </div>
+        <div class="form-group">
+            <label for="nomesFunc">Escolha uma função:</label>
+            <select class="form-control" id="nomeFunc" name="funcao" data-placeholder="Selecione a função:">
+
+                <option value="1">Acrescentar</option>
+                <option value="2">Retirar</option>
+                <option value="3">Novo Valor</option>
+
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Editar</button>
+    </form>
+
+</div>

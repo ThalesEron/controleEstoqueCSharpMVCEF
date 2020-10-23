@@ -58,9 +58,13 @@ namespace ControleEstoque
             app.UseEndpoints(endpoints =>
             {
 
-               // endpoints.MapControllerRoute(name: "listar",
-              //  pattern: "listar",
-              //  new { controller = "Home", action = "Listar" });
+                endpoints.MapControllerRoute(name: "editar",
+                pattern: "editar",
+                new { controller = "Home", action = "Editar" });
+
+                endpoints.MapControllerRoute(name: "listar",
+                pattern: "listar",
+                new { controller = "Home", action = "Listar" });
 
                 endpoints.MapControllerRoute(name: "cadastro",
                 pattern: "cadastro",
