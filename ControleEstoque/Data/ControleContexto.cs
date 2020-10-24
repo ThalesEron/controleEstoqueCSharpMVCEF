@@ -15,6 +15,8 @@ namespace ControleEstoque
 
         public DbSet<Produto> Produtos { get; set; }
 
+        public DbSet<Historico> Historicos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ProdutoMap());

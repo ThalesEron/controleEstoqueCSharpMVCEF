@@ -57,6 +57,9 @@ namespace ControleEstoque
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(name: "historico",
+                pattern: "historico",
+                new { controller = "Home", action = "Historico" });
 
                 endpoints.MapControllerRoute(name: "editar",
                 pattern: "editar",

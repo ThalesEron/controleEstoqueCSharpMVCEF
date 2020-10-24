@@ -77,6 +77,25 @@ namespace ControleEstoque.Controllers
             return View();
         }
 
+        public IActionResult Historico()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
+
+            var context = new ControleContexto(optionsBuilder.Options);
+
+
+
+            IEnumerable<Historico> historicoQuery =
+    from hist in context.Historicos
+    select hist;
+
+
+            ViewBag.ListarHist = historicoQuery;
+
+            return View();
+        }
+
 
 
         [HttpPost]
@@ -119,7 +138,7 @@ namespace ControleEstoque.Controllers
         {
 
 
-
+            String funcTxt;
 
                 var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
                 optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
@@ -144,6 +163,7 @@ namespace ControleEstoque.Controllers
                     {
                     
                         produtoEdit.Quantidade += quantidade;
+                    funcTxt = "Acrescentado";
                    
                     }
                     else if (funcao == 2)
@@ -159,20 +179,22 @@ namespace ControleEstoque.Controllers
                         {
                         produtoEdit.Quantidade -= quantidade;
                         }
-
-                    
+                    funcTxt = "Retirado";
 
                 }
                     else
                     {
                         produtoEdit.Quantidade = quantidade;
-                    }
+                    funcTxt = "Novo Valor";
+                }
 
 
-
-                    context.SaveChanges();
 
                 ViewBag.Message = "Produto editado com sucesso. Novo valor: " + produtoEdit.Quantidade;
+
+
+                context.Historicos.Add(new Historico() { Nome = produtoEdit.Nome, Quantidade = quantidade, Funcao = funcTxt, Data = DateTime.Now });
+                context.SaveChanges();
 
                 IEnumerable<Produto> produtoQuery =
                     from prod in context.Produtos
