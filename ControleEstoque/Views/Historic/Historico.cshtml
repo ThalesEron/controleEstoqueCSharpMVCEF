@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Historico";
+    IEnumerable<Business.Historico> historicos = ViewBag.ListarHist;
+}
+
+
+<div class="jumbotron">
+    <h3>Histórico</h3>
+
+    <ul>
+        @foreach (var p in historicos)
+        {
+        <li>Produto @p.Nome foi @p.Funcao no valor de: @p.Quantidade . Dia: @p.Data</li>
+        }
+    </ul>
+
+</div>

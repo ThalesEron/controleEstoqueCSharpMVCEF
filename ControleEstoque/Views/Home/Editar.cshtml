@@ -30,13 +30,14 @@
     <form action="/editar" method="post">
         <div class="form-group">
             <label for="nomestring">Nome</label>
-            <select class="form-control" id="nome" name="nome" data-placeholder="Selecione o produto:">
+            <select class="form-control" id="nome" name="nome">
 
+                <option value="0">Selecione um produto</option>
                 @if (produtos != null)
                 {
                     @foreach (var p in produtos)
                     {
-                        <option value="@p.Id">@p.Nome</option>
+                        <option value="@p.Nome">@p.Nome</option>
                     }
                 }
 
@@ -49,11 +50,12 @@
         </div>
         <div class="form-group">
             <label for="nomesFunc">Escolha uma função:</label>
-            <select class="form-control" id="nomeFunc" name="funcao" data-placeholder="Selecione a função:">
+            <select class="form-control" id="nomeFunc" name="funcao">
 
+                <option value="3">Novo Valor</option>
                 <option value="1">Acrescentar</option>
                 <option value="2">Retirar</option>
-                <option value="3">Novo Valor</option>
+
 
             </select>
         </div>

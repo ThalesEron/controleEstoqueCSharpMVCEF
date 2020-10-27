@@ -59,7 +59,7 @@ namespace ControleEstoque
             {
                 endpoints.MapControllerRoute(name: "historico",
                 pattern: "historico",
-                new { controller = "Home", action = "Historico" });
+                new { controller = "Historic", action = "Historico" });
 
                 endpoints.MapControllerRoute(name: "editar",
                 pattern: "editar",
@@ -74,8 +74,17 @@ namespace ControleEstoque
                 new { controller = "Home", action = "Cadastro" });
 
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                name: "edit",
+                pattern: "edit/{id?}",
+                new { controller = "Home", action = "edit" });
+
+                endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                
+
+               
 
             });
         }

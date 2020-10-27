@@ -58,6 +58,7 @@ namespace ControleEstoque.Controllers
             return View();
         }
 
+
         public IActionResult Listar()
         {
             var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
@@ -77,24 +78,30 @@ namespace ControleEstoque.Controllers
             return View();
         }
 
-        public IActionResult Historico()
+
+        // GET: Produto/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
             optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
 
             var context = new ControleContexto(optionsBuilder.Options);
 
+            var produto = await context.Produtos.FindAsync(id);
+            if (produto == null)
+            {
+                return NotFound();
+            }
 
 
-            IEnumerable<Historico> historicoQuery =
-    from hist in context.Historicos
-    select hist;
-
-
-            ViewBag.ListarHist = historicoQuery;
-
-            return View();
+            return View(produto);
         }
+       
 
 
 
@@ -134,7 +141,7 @@ namespace ControleEstoque.Controllers
         }
 
         [HttpPost]
-        public IActionResult Editar(int nome, int quantidade, int funcao)
+        public IActionResult Editar(string nome, int quantidade, int funcao)
         {
 
 
@@ -147,7 +154,7 @@ namespace ControleEstoque.Controllers
 
 
                 var produt = context.Produtos
-                           .FirstOrDefault(b => b.Id == nome);
+                           .FirstOrDefault(b => b.Nome == nome);
 
 
                 if (produt?.Id > 0)
@@ -155,7 +162,7 @@ namespace ControleEstoque.Controllers
                     
 
                     var produtoEdit = (from p in context.Produtos
-                                       where p.Id == nome
+                                       where p.Nome == nome
                                        select p).SingleOrDefault();
 
 
@@ -196,12 +203,7 @@ namespace ControleEstoque.Controllers
                 context.Historicos.Add(new Historico() { Nome = produtoEdit.Nome, Quantidade = quantidade, Funcao = funcTxt, Data = DateTime.Now });
                 context.SaveChanges();
 
-                IEnumerable<Produto> produtoQuery =
-                    from prod in context.Produtos
-                    select prod;
-
-
-                    ViewBag.Listar = produtoQuery;
+             
 
                 }
                 else
@@ -209,7 +211,14 @@ namespace ControleEstoque.Controllers
 
                     ViewBag.Message = "O produto nao existe no banco de dados.";
                 }
-            
+
+            IEnumerable<Produto> produtoQuery =
+                from prod in context.Produtos
+                select prod;
+
+
+            ViewBag.Listar = produtoQuery;
+
 
 
 

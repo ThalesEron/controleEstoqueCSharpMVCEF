@@ -80,4 +80,5 @@ D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.csproj.CoreCompileInputs.cache
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\MVCControleEstoque.MvcApplicationPartsAssemblyInfo.cache
 D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\Razor\Views\Home\Editar.cshtml.g.cs
-D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\Razor\Views\Home\Historico.cshtml.g.cs
+D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\Razor\Views\Historic\Historico.cshtml.g.cs
+D:\projetoc#studio\ControleEstoqueEstudo\ControleEstoque\obj\Debug\netcoreapp3.1\Razor\Views\Home\Edit.cshtml.g.cs
