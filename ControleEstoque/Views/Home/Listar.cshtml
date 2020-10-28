@@ -15,18 +15,27 @@
         @foreach (var p in produtos)
         {
 
-        <dt class="col-sm-10">
-            @Html.DisplayNameFor(model => p.Nome) |
-            @Html.DisplayNameFor(model => p.Quantidade)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => p.Nome) |
-            @Html.DisplayFor(model => p.Quantidade)
-            <a asp-action="Edit" asp-route-id="@p.Id">Edit</a>
-        </dd>
-         
+            <dt class="col-sm-10">
+                @Html.DisplayNameFor(model => p.Nome) |
+                @Html.DisplayNameFor(model => p.Quantidade)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => p.Nome) |
+                @Html.DisplayFor(model => p.Quantidade)
+                <a asp-action="Edit" asp-route-id="@p.Id">Editar</a>
+                <a asp-action="Excluir" asp-route-id="@p.Id"
+                        onclick="return confirm('Deseja realmente excluir esse produto? @p.Nome')">
+                    Excluir
+                </a>
+            </dd>
+
+            
+
+
 
 
         }
     </dl>
-    </div>
+</div>
+
+

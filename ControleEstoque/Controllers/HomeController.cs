@@ -101,8 +101,32 @@ namespace ControleEstoque.Controllers
 
             return View(produto);
         }
-       
 
+
+        public async Task<IActionResult> Excluir(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
+
+            var context = new ControleContexto(optionsBuilder.Options);
+
+            var produto = await context.Produtos.FindAsync(id);
+
+            
+           
+            context.Historicos.Add(new Historico() { Nome = produto.Nome, Quantidade = produto.Quantidade, Funcao = "Deletado", Data = DateTime.Now });
+            context.Produtos.Remove(produto);
+            context.SaveChanges();
+
+            ViewBag.Message = "Produto excluido com sucesso.";
+
+            return View();
+        }
 
 
         [HttpPost]
@@ -141,11 +165,9 @@ namespace ControleEstoque.Controllers
         }
 
         [HttpPost]
-        public IActionResult Editar(string nome, int quantidade, int funcao)
+        public IActionResult Editar(string nome, int quantidade, string funcao)
         {
 
-
-            String funcTxt;
 
                 var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
                 optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
@@ -166,41 +188,52 @@ namespace ControleEstoque.Controllers
                                        select p).SingleOrDefault();
 
 
-                    if (funcao == 1)
-                    {
-                    
-                        produtoEdit.Quantidade += quantidade;
-                    funcTxt = "Acrescentado";
-                   
-                    }
-                    else if (funcao == 2)
-                    {
+                if (funcao == "Acrescentado")
+                {
+
+                    produtoEdit.Quantidade += quantidade;
+
+
+                }
+                else if (funcao == "Retirado")
+                {
 
                     int reduzir = produtoEdit.Quantidade - quantidade;
 
-                        if (reduzir < 0)
-                        {
+                    if (reduzir < 0)
+                    {
                         produtoEdit.Quantidade = 0;
-                        }
-                        else
-                        {
-                        produtoEdit.Quantidade -= quantidade;
-                        }
-                    funcTxt = "Retirado";
-
-                }
+                    }
                     else
                     {
-                        produtoEdit.Quantidade = quantidade;
-                    funcTxt = "Novo Valor";
+                        produtoEdit.Quantidade -= quantidade;
+                    }
+
+
+                }
+                else if (funcao == "Deletado")
+                {
+                    context.Produtos.Remove(produt);
+                   
+                }
+                else
+                {
+                    produtoEdit.Quantidade = quantidade;
+
                 }
 
 
+                if (funcao == "Deletado")
+                {
+                    ViewBag.Message = "Produto deletado com sucesso.";
+                } else
+                {
+                    ViewBag.Message = "Produto editado com sucesso. Novo valor: " + produtoEdit.Quantidade;
+                }
+                   
 
-                ViewBag.Message = "Produto editado com sucesso. Novo valor: " + produtoEdit.Quantidade;
 
-
-                context.Historicos.Add(new Historico() { Nome = produtoEdit.Nome, Quantidade = quantidade, Funcao = funcTxt, Data = DateTime.Now });
+                context.Historicos.Add(new Historico() { Nome = produtoEdit.Nome, Quantidade = quantidade, Funcao = funcao, Data = DateTime.Now });
                 context.SaveChanges();
 
              

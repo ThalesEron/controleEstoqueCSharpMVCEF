@@ -79,6 +79,11 @@ namespace ControleEstoque
                 new { controller = "Home", action = "edit" });
 
                 endpoints.MapControllerRoute(
+                name: "excluir",
+                pattern: "excluir/{id?}",
+                new { controller = "Home", action = "Excluir" });
+
+                endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
