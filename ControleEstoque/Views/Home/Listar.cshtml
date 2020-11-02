@@ -10,6 +10,15 @@
 
 <div>
     <h4>Produtos</h4>
+
+
+    <form asp-controller="Home" asp-action="Listar" method="get">
+        <p>
+            Nome: <input type="text" name="SearchString" />
+            <input type="submit" value="Pesquisar" />
+        </p>
+    </form>
+
     <hr />
     <dl class="jumbotron">
         @foreach (var p in produtos)
@@ -24,12 +33,12 @@
                 @Html.DisplayFor(model => p.Quantidade)
                 <a asp-action="Edit" asp-route-id="@p.Id">Editar</a>
                 <a asp-action="Excluir" asp-route-id="@p.Id"
-                        onclick="return confirm('Deseja realmente excluir esse produto? @p.Nome')">
+                   onclick="return confirm('Deseja realmente excluir esse produto? @p.Nome')">
                     Excluir
                 </a>
             </dd>
 
-            
+
 
 
 

@@ -9,6 +9,8 @@ using ControleEstoque.Models;
 using Business;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Configuration;
 
 namespace ControleEstoque.Controllers
 {
@@ -17,17 +19,12 @@ namespace ControleEstoque.Controllers
     {
 
 
+        private readonly ControleContexto _context;
 
-        private readonly ILogger<HomeController> _logger;
-
-
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ControleContexto context)
         {
-            _logger = logger;
+            _context = context;
         }
-
-
 
 
         public IActionResult Index()
@@ -44,36 +41,31 @@ namespace ControleEstoque.Controllers
         public IActionResult Editar()
         {
 
-            var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
-            var context = new ControleContexto(optionsBuilder.Options);
+        
 
             IEnumerable<Produto> produtoQuery =
-   from prod in context.Produtos
-   select prod;
+             from prod in _context.Produtos
+             select prod;
 
+            
 
-            ViewBag.Listar = produtoQuery;
+        ViewBag.Listar = produtoQuery;
 
             return View();
         }
 
 
-        public IActionResult Listar()
+        public async Task<IActionResult> Listar(string searchString)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
+            var produto = from p in _context.Produtos
+                          select p;
 
-            var context = new ControleContexto(optionsBuilder.Options);
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                produto = produto.Where(s => s.Nome.Contains(searchString));
+            }
 
-
-
-            IEnumerable<Produto> produtoQuery =
-    from prod in context.Produtos
-    select prod;
-
-
-            ViewBag.Listar = produtoQuery;
+            ViewBag.Listar = produto;
 
             return View();
         }
@@ -87,12 +79,9 @@ namespace ControleEstoque.Controllers
                 return NotFound();
             }
 
-            var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
+          
 
-            var context = new ControleContexto(optionsBuilder.Options);
-
-            var produto = await context.Produtos.FindAsync(id);
+            var produto = await _context.Produtos.FindAsync(id);
             if (produto == null)
             {
                 return NotFound();
@@ -110,18 +99,15 @@ namespace ControleEstoque.Controllers
                 return NotFound();
             }
 
-            var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
+         
 
-            var context = new ControleContexto(optionsBuilder.Options);
+            var produto = await _context.Produtos.FindAsync(id);
 
-            var produto = await context.Produtos.FindAsync(id);
 
-            
-           
-            context.Historicos.Add(new Historico() { Nome = produto.Nome, Quantidade = produto.Quantidade, Funcao = "Deletado", Data = DateTime.Now });
-            context.Produtos.Remove(produto);
-            context.SaveChanges();
+
+            _context.Historicos.Add(new Historico() { Nome = produto.Nome, Quantidade = produto.Quantidade, Funcao = "Deletado", Data = DateTime.Now });
+            _context.Produtos.Remove(produto);
+            _context.SaveChanges();
 
             ViewBag.Message = "Produto excluido com sucesso.";
 
@@ -133,13 +119,9 @@ namespace ControleEstoque.Controllers
         public IActionResult Cadastro(String nome, int quantidade)
         {
 
-            var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
-
-            var context = new ControleContexto(optionsBuilder.Options);
 
 
-            var produt = context.Produtos
+            var produt = _context.Produtos
                        .FirstOrDefault(b => b.Nome == nome);
 
 
@@ -154,8 +136,8 @@ namespace ControleEstoque.Controllers
             }
             else
             {
-                context.Produtos.Add(new Produto() { Nome = nome, Quantidade = quantidade });
-                context.SaveChanges();
+                _context.Produtos.Add(new Produto() { Nome = nome, Quantidade = quantidade });
+                _context.SaveChanges();
                 ViewBag.Message = "Produto cadastro com sucesso.";
             }
 
@@ -169,13 +151,10 @@ namespace ControleEstoque.Controllers
         {
 
 
-                var optionsBuilder = new DbContextOptionsBuilder<ControleContexto>();
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-PJMFVJI\\SQLEXPRESS;Database=cms2;Trusted_Connection=True;");
-
-                var context = new ControleContexto(optionsBuilder.Options);
+              
 
 
-                var produt = context.Produtos
+                var produt = _context.Produtos
                            .FirstOrDefault(b => b.Nome == nome);
 
 
@@ -183,7 +162,7 @@ namespace ControleEstoque.Controllers
                 {
                     
 
-                    var produtoEdit = (from p in context.Produtos
+                    var produtoEdit = (from p in _context.Produtos
                                        where p.Nome == nome
                                        select p).SingleOrDefault();
 
@@ -213,7 +192,7 @@ namespace ControleEstoque.Controllers
                 }
                 else if (funcao == "Deletado")
                 {
-                    context.Produtos.Remove(produt);
+                    _context.Produtos.Remove(produt);
                    
                 }
                 else
@@ -230,11 +209,11 @@ namespace ControleEstoque.Controllers
                 {
                     ViewBag.Message = "Produto editado com sucesso. Novo valor: " + produtoEdit.Quantidade;
                 }
-                   
 
 
-                context.Historicos.Add(new Historico() { Nome = produtoEdit.Nome, Quantidade = quantidade, Funcao = funcao, Data = DateTime.Now });
-                context.SaveChanges();
+
+                _context.Historicos.Add(new Historico() { Nome = produtoEdit.Nome, Quantidade = quantidade, Funcao = funcao, Data = DateTime.Now });
+                _context.SaveChanges();
 
              
 
@@ -246,7 +225,7 @@ namespace ControleEstoque.Controllers
                 }
 
             IEnumerable<Produto> produtoQuery =
-                from prod in context.Produtos
+                from prod in _context.Produtos
                 select prod;
 
 

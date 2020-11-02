@@ -26,6 +26,9 @@ namespace ControleEstoque
         {
             services.AddControllersWithViews();
 
+
+
+
             services.AddDbContext<ControleContexto>(options =>
             {
                  options.UseSqlServer(Configuration.GetConnectionString("ControleContexto"));
