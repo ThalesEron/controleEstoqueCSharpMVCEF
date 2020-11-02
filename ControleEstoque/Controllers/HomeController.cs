@@ -201,6 +201,9 @@ namespace ControleEstoque.Controllers
 
                 }
 
+                _context.Historicos.Add(new Historico() { Nome = produtoEdit.Nome, Quantidade = quantidade, Funcao = funcao, Data = DateTime.Now });
+                _context.SaveChanges();
+
 
                 if (funcao == "Deletado")
                 {
@@ -209,12 +212,6 @@ namespace ControleEstoque.Controllers
                 {
                     ViewBag.Message = "Produto editado com sucesso. Novo valor: " + produtoEdit.Quantidade;
                 }
-
-
-
-                _context.Historicos.Add(new Historico() { Nome = produtoEdit.Nome, Quantidade = quantidade, Funcao = funcao, Data = DateTime.Now });
-                _context.SaveChanges();
-
              
 
                 }
